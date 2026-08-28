@@ -1,0 +1,4 @@
+*.class
+taskflow-log.csv
+taskflow-report.txt
+.DS_Store
