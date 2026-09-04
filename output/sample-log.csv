@@ -1,0 +1,31 @@
+timestamp,taskId,taskName,thread,event
+2026-09-04T11:21:22.296183922Z,7,Refresh cache,pool-1-thread-1,STARTED on pool-1-thread-1
+2026-09-04T11:21:22.326298692Z,4,Cleanup temp files,pool-1-thread-3,STARTED on pool-1-thread-3
+2026-09-04T11:21:22.326518223Z,10,Notify subscribers,pool-1-thread-4,STARTED on pool-1-thread-4
+2026-09-04T11:21:22.326654718Z,2,Send email,pool-1-thread-2,STARTED on pool-1-thread-2
+2026-09-04T11:21:22.628303823Z,7,Refresh cache,pool-1-thread-1,COMPLETED
+2026-09-04T11:21:22.628772321Z,3,Backup database,pool-1-thread-1,STARTED on pool-1-thread-1
+2026-09-04T11:21:22.726972790Z,2,Send email,pool-1-thread-2,COMPLETED
+2026-09-04T11:21:22.727565250Z,5,Sync inventory,pool-1-thread-2,STARTED on pool-1-thread-2
+2026-09-04T11:21:22.835159912Z,10,Notify subscribers,pool-1-thread-4,FAILED (attempt 1): Simulated random failure for task 10
+2026-09-04T11:21:22.835444169Z,10,Notify subscribers,pool-1-thread-4,RETRYING
+2026-09-04T11:21:22.927827302Z,4,Cleanup temp files,pool-1-thread-3,COMPLETED
+2026-09-04T11:21:22.928157039Z,8,Validate orders,pool-1-thread-3,STARTED on pool-1-thread-3
+2026-09-04T11:21:23.335779949Z,10,Notify subscribers,pool-1-thread-4,COMPLETED on retry
+2026-09-04T11:21:23.336775514Z,1,Generate report,pool-1-thread-4,STARTED on pool-1-thread-4
+2026-09-04T11:21:23.628330704Z,5,Sync inventory,pool-1-thread-2,COMPLETED
+2026-09-04T11:21:23.628953560Z,6,Compress logs,pool-1-thread-2,STARTED on pool-1-thread-2
+2026-09-04T11:21:24.028963521Z,8,Validate orders,pool-1-thread-3,COMPLETED
+2026-09-04T11:21:24.029768044Z,9,Archive old records,pool-1-thread-3,STARTED on pool-1-thread-3
+2026-09-04T11:21:24.329370179Z,6,Compress logs,pool-1-thread-2,FAILED (attempt 1): Simulated random failure for task 6
+2026-09-04T11:21:24.330527417Z,6,Compress logs,pool-1-thread-2,RETRYING
+2026-09-04T11:21:24.429450406Z,3,Backup database,pool-1-thread-1,FAILED (attempt 1): Simulated random failure for task 3
+2026-09-04T11:21:24.430205283Z,3,Backup database,pool-1-thread-1,RETRYING
+2026-09-04T11:21:24.537187537Z,1,Generate report,pool-1-thread-4,FAILED (attempt 1): Simulated random failure for task 1
+2026-09-04T11:21:24.537993325Z,1,Generate report,pool-1-thread-4,RETRYING
+2026-09-04T11:21:25.030912581Z,6,Compress logs,pool-1-thread-2,COMPLETED on retry
+2026-09-04T11:21:25.098153893Z,9,Archive old records,pool-1-thread-3,FAILED (attempt 1): Interrupted while executing task 9
+2026-09-04T11:21:25.100336430Z,9,Archive old records,pool-1-thread-3,RETRYING
+2026-09-04T11:21:25.100518140Z,9,Archive old records,pool-1-thread-3,FAILED permanently: Interrupted while executing task 9
+2026-09-04T11:21:25.100735521Z,1,Generate report,pool-1-thread-4,FAILED permanently: Interrupted while executing task 1
+2026-09-04T11:21:25.101676574Z,3,Backup database,pool-1-thread-1,FAILED permanently: Interrupted while executing task 3
