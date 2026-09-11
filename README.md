@@ -53,7 +53,14 @@ Send email,1,400
 ```
 
 ## Instructions for Testing
-Three standalone test classes were used during development to validate each module independently before wiring them together:
+An automated validation suite (`ValidationTests.java`) runs 20 assertions across the core modules — priority ordering, FIFO tiebreaking, submission validation, task timing, and a full concurrent execution run — with no external test framework required:
+```
+javac model/*.java exception/*.java queue/*.java logger/*.java executor/*.java report/*.java util/*.java ValidationTests.java
+java ValidationTests
+```
+Exits with code 0 if all checks pass, 1 otherwise.
+
+Three standalone test classes were also used during development to validate each module independently before wiring them together:
 - `Module1Test.java` — verifies the priority queue orders tasks correctly and rejects invalid submissions
 - `Module2Test.java` — verifies concurrent execution across multiple worker threads, with retry-on-failure behavior
 - `Module3Test.java` — verifies the full pipeline end-to-end, including file logging and report generation
