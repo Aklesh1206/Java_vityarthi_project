@@ -1,29 +1,78 @@
 digraph ClassDiagram {
     rankdir=TB;
     bgcolor="white";
+    fontname="Helvetica";
     node [shape=record, fontname="Helvetica", fontsize=10, style=filled, fillcolor="#F1EFE8"];
     edge [fontname="Helvetica", fontsize=9, color="#555555", arrowhead=vee];
+    compound=true;
 
-    Task [label="{Task|+ id: long\l+ name: String\l+ priority: int\l+ estimatedDurationMillis: long\l+ status: TaskStatus\l+ submittedAt: Instant\l+ retryCount: int\l|+ markStarted()\l+ markCompleted()\l+ markFailed()\l+ getWaitTimeMillis(): long\l+ getExecutionTimeMillis(): long\l}"];
+    subgraph cluster_model {
+        label="com.taskflow.model";
+        fontsize=12; fontname="Helvetica-Bold"; color="#7A6FD9"; style=rounded; margin=16;
 
-    TaskStatus [label="{\<\<enum\>\>\nTaskStatus|SUBMITTED\lQUEUED\lRUNNING\lRETRYING\lCOMPLETED\lFAILED\l}", fillcolor="#EEEDFE"];
+        Task [label="{Task|+ id: long\l+ name: String\l+ priority: int\l+ estimatedDurationMillis: long\l+ status: TaskStatus\l+ submittedAt: Instant\l+ retryCount: int\l|+ markStarted()\l+ markCompleted()\l+ markFailed()\l+ getWaitTimeMillis(): long\l+ getExecutionTimeMillis(): long\l}"];
+        TaskStatus [label="{\<\<enum\>\>\nTaskStatus|SUBMITTED\lQUEUED\lRUNNING\lRETRYING\lCOMPLETED\lFAILED\l}", fillcolor="#EEEDFE"];
+        TaskPriorityComparator [label="{TaskPriorityComparator|\<\<implements Comparator\<Task\>\>\>|+ compare(t1, t2): int\l}", fillcolor="#EEEDFE"];
+    }
 
-    TaskPriorityComparator [label="{TaskPriorityComparator|\<\<implements Comparator\<Task\>\>\>|+ compare(t1, t2): int\l}"];
+    subgraph cluster_queue {
+        label="com.taskflow.queue";
+        fontsize=12; fontname="Helvetica-Bold"; color="#185FA5"; style=rounded; margin=16;
 
-    TaskQueueManager [label="{TaskQueueManager|- queue: PriorityBlockingQueue\<Task\>\l|+ submit(task): void\l+ takeNext(): Task\l+ size(): int\l}", fillcolor="#E6F1FB"];
+        TaskQueueManager [label="{TaskQueueManager|- queue: PriorityBlockingQueue\<Task\>\l|+ submit(task): void\l+ takeNext(): Task\l+ size(): int\l}", fillcolor="#E6F1FB"];
+    }
 
-    TaskExecutorService [label="{TaskExecutorService|- pool: ExecutorService\l- processedTasks: List\<Task\>\l- completedCount: AtomicInteger\l- failedCount: AtomicInteger\l|+ start(queueManager, logger): void\l+ shutdown(timeout): void\l+ getProcessedTasks(): List\<Task\>\l}", fillcolor="#E1F5EE"];
+    subgraph cluster_executor {
+        label="com.taskflow.executor";
+        fontsize=12; fontname="Helvetica-Bold"; color="#0F6E56"; style=rounded; margin=16;
 
-    Worker [label="{Worker|\<\<implements Runnable\>\>\>|+ run(): void\l- processWithRetry(task): void\l- execute(task): void\l}", fillcolor="#E1F5EE"];
+        TaskExecutorService [label="{TaskExecutorService|- pool: ExecutorService\l- processedTasks: List\<Task\>\l- completedCount: AtomicInteger\l- failedCount: AtomicInteger\l|+ start(queueManager, logger): void\l+ shutdown(timeout): void\l+ getProcessedTasks(): List\<Task\>\l}", fillcolor="#E1F5EE"];
+        Worker [label="{Worker|\<\<implements Runnable\>\>\>|+ run(): void\l- processWithRetry(task): void\l- execute(task): void\l}", fillcolor="#E1F5EE"];
+    }
 
-    TaskLogger [label="{\<\<interface\>\>\nTaskLogger||+ logEvent(task, event): void\l}", fillcolor="#FAEEDA"];
+    subgraph cluster_logger {
+        label="com.taskflow.logger";
+        fontsize=12; fontname="Helvetica-Bold"; color="#854F0B"; style=rounded; margin=16;
 
-    FileTaskLogger [label="{FileTaskLogger|- writer: PrintWriter\l|+ logEvent(task, event): void\l+ close(): void\l}", fillcolor="#FAEEDA"];
+        TaskLogger [label="{\<\<interface\>\>\nTaskLogger||+ logEvent(task, event): void\l}", fillcolor="#FAEEDA"];
+        FileTaskLogger [label="{FileTaskLogger|- writer: PrintWriter\l|+ logEvent(task, event): void\l+ close(): void\l}", fillcolor="#FAEEDA"];
+        ConsoleTaskLogger [label="{ConsoleTaskLogger|+ logEvent(task, event): void\l}", fillcolor="#FAEEDA"];
+    }
 
-    PerformanceReportGenerator [label="{PerformanceReportGenerator||+ generate(tasks, duration, path): void\l}", fillcolor="#FAECE7"];
+    subgraph cluster_report {
+        label="com.taskflow.report";
+        fontsize=12; fontname="Helvetica-Bold"; color="#993C1D"; style=rounded; margin=16;
 
-    InvalidTaskException [label="{\<\<exception\>\>\nInvalidTaskException}", fillcolor="#FCEBEB"];
-    TaskExecutionException [label="{\<\<exception\>\>\nTaskExecutionException}", fillcolor="#FCEBEB"];
+        PerformanceReportGenerator [label="{PerformanceReportGenerator||+ generate(tasks, duration, path): void\l}", fillcolor="#FAECE7"];
+    }
+
+    subgraph cluster_exception {
+        label="com.taskflow.exception";
+        fontsize=12; fontname="Helvetica-Bold"; color="#A32D2D"; style=rounded; margin=16;
+
+        InvalidTaskException [label="{\<\<exception\>\>\nInvalidTaskException}", fillcolor="#FCEBEB"];
+        TaskExecutionException [label="{\<\<exception\>\>\nTaskExecutionException}", fillcolor="#FCEBEB"];
+    }
+
+    subgraph cluster_util {
+        label="com.taskflow.util";
+        fontsize=12; fontname="Helvetica-Bold"; color="#5F5E5A"; style=rounded; margin=16;
+
+        ConfigLoader [label="{ConfigLoader|+ getDefaultPoolSize(): int\l}", fillcolor="#F1EFE8"];
+    }
+
+    subgraph cluster_root {
+        label="com.taskflow";
+        fontsize=12; fontname="Helvetica-Bold"; color="#333333"; style=rounded; margin=16;
+
+        Main [label="{Main|+ main(args: String[]): void\l}", fillcolor="#E6F1FB"];
+    }
+
+    Main -> TaskQueueManager [label="builds"];
+    Main -> TaskExecutorService [label="starts"];
+    Main -> FileTaskLogger [label="creates"];
+    Main -> PerformanceReportGenerator [label="invokes"];
+    Main -> ConfigLoader [label="reads defaults from"];
 
     Task -> TaskStatus [label="has a", style=dashed, arrowhead=vee];
     TaskQueueManager -> Task [label="manages *"];
@@ -34,5 +83,6 @@ digraph ClassDiagram {
     Worker -> TaskLogger [label="logs via"];
     Worker -> TaskExecutionException [label="throws", style=dashed];
     FileTaskLogger -> TaskLogger [label="implements", arrowhead=empty, style=dashed];
+    ConsoleTaskLogger -> TaskLogger [label="implements", arrowhead=empty, style=dashed];
     PerformanceReportGenerator -> Task [label="reads *"];
 }
