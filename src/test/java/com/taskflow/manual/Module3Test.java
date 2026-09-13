@@ -1,9 +1,11 @@
-import model.Task;
-import queue.TaskQueueManager;
-import executor.TaskExecutorService;
-import logger.FileTaskLogger;
-import report.PerformanceReportGenerator;
-import exception.InvalidTaskException;
+package com.taskflow.manual;
+
+import com.taskflow.model.Task;
+import com.taskflow.queue.TaskQueueManager;
+import com.taskflow.executor.TaskExecutorService;
+import com.taskflow.logger.FileTaskLogger;
+import com.taskflow.report.PerformanceReportGenerator;
+import com.taskflow.exception.InvalidTaskException;
 
 /**
  * Full end-to-end run of TaskFlow: submits tasks, processes them through

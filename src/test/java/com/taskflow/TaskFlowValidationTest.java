@@ -1,9 +1,11 @@
-import model.Task;
-import model.TaskStatus;
-import queue.TaskQueueManager;
-import executor.TaskExecutorService;
-import logger.ConsoleTaskLogger;
-import exception.InvalidTaskException;
+package com.taskflow;
+
+import com.taskflow.model.Task;
+import com.taskflow.model.TaskStatus;
+import com.taskflow.queue.TaskQueueManager;
+import com.taskflow.executor.TaskExecutorService;
+import com.taskflow.logger.ConsoleTaskLogger;
+import com.taskflow.exception.InvalidTaskException;
 
 import java.util.List;
 
@@ -15,10 +17,10 @@ import java.util.List;
  * calculations, and a full concurrent execution run — then reports
  * PASS/FAIL for each check plus a summary.
  *
- * Run with: java ValidationTests
+ * Run with: java com.taskflow.TaskFlowValidationTest
  * Exit code is 0 if all tests pass, 1 otherwise (useful for CI).
  */
-public class ValidationTests {
+public class TaskFlowValidationTest {
 
     private static int passed = 0;
     private static int failed = 0;

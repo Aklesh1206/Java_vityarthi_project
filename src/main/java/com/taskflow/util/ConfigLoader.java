@@ -1,4 +1,4 @@
-package util;
+package com.taskflow.util;
 
 /**
  * Central place for configurable defaults. Keeping this separate (rather

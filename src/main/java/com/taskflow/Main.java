@@ -1,10 +1,12 @@
-import model.Task;
-import queue.TaskQueueManager;
-import executor.TaskExecutorService;
-import logger.FileTaskLogger;
-import report.PerformanceReportGenerator;
-import exception.InvalidTaskException;
-import util.ConfigLoader;
+package com.taskflow;
+
+import com.taskflow.model.Task;
+import com.taskflow.queue.TaskQueueManager;
+import com.taskflow.executor.TaskExecutorService;
+import com.taskflow.logger.FileTaskLogger;
+import com.taskflow.report.PerformanceReportGenerator;
+import com.taskflow.exception.InvalidTaskException;
+import com.taskflow.util.ConfigLoader;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -17,13 +19,13 @@ import java.io.IOException;
  * per line), submits them to the queue, processes them through a
  * configurable thread pool, and writes a log file + performance report.
  *
- * Usage: java Main [tasksFile] [poolSize]
- * Defaults: tasksFile = "tasks.txt", poolSize = 4
+ * Usage: java com.taskflow.Main [tasksFile] [poolSize]
+ * Defaults: tasksFile = "config/tasks.txt", poolSize = 4
  */
 public class Main {
 
     public static void main(String[] args) {
-        String tasksFile = args.length > 0 ? args[0] : "tasks.txt";
+        String tasksFile = args.length > 0 ? args[0] : "config/tasks.txt";
         int poolSize = args.length > 1 ? Integer.parseInt(args[1]) : ConfigLoader.getDefaultPoolSize();
 
         TaskQueueManager queueManager = new TaskQueueManager();

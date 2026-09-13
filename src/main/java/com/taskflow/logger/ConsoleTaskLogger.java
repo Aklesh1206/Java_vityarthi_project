@@ -1,6 +1,6 @@
-package logger;
+package com.taskflow.logger;
 
-import model.Task;
+import com.taskflow.model.Task;
 import java.time.Instant;
 
 /**

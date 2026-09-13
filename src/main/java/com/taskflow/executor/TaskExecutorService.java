@@ -1,8 +1,8 @@
-package executor;
+package com.taskflow.executor;
 
-import model.Task;
-import queue.TaskQueueManager;
-import logger.TaskLogger;
+import com.taskflow.model.Task;
+import com.taskflow.queue.TaskQueueManager;
+import com.taskflow.logger.TaskLogger;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;

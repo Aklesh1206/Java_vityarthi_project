@@ -1,6 +1,6 @@
-package logger;
+package com.taskflow.logger;
 
-import model.Task;
+import com.taskflow.model.Task;
 
 /**
  * Minimal logging contract. Module 3 (Logging & Performance Report Generator)

@@ -1,6 +1,8 @@
-import model.Task;
-import queue.TaskQueueManager;
-import exception.InvalidTaskException;
+package com.taskflow.manual;
+
+import com.taskflow.model.Task;
+import com.taskflow.queue.TaskQueueManager;
+import com.taskflow.exception.InvalidTaskException;
 
 /**
  * Standalone smoke test for Module 1 (submission + priority queue).

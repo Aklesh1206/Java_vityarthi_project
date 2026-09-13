@@ -1,4 +1,4 @@
-package model;
+package com.taskflow.model;
 
 /**
  * Represents the lifecycle state of a Task as it moves through the system.

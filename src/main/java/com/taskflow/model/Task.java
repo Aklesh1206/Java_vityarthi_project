@@ -1,4 +1,4 @@
-package model;
+package com.taskflow.model;
 
 import java.time.Instant;
 import java.util.concurrent.atomic.AtomicLong;

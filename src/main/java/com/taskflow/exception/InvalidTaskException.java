@@ -1,4 +1,4 @@
-package exception;
+package com.taskflow.exception;
 
 /**
  * Thrown when a task submission fails validation

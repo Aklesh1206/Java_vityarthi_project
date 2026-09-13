@@ -1,4 +1,4 @@
-package model;
+package com.taskflow.model;
 
 import java.util.Comparator;
 

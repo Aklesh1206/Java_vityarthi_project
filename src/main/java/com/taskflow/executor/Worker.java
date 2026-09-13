@@ -1,10 +1,10 @@
-package executor;
+package com.taskflow.executor;
 
-import model.Task;
-import model.TaskStatus;
-import queue.TaskQueueManager;
-import logger.TaskLogger;
-import exception.TaskExecutionException;
+import com.taskflow.model.Task;
+import com.taskflow.model.TaskStatus;
+import com.taskflow.queue.TaskQueueManager;
+import com.taskflow.logger.TaskLogger;
+import com.taskflow.exception.TaskExecutionException;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;

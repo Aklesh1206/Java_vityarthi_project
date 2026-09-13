@@ -1,7 +1,7 @@
-package report;
+package com.taskflow.report;
 
-import model.Task;
-import model.TaskStatus;
+import com.taskflow.model.Task;
+import com.taskflow.model.TaskStatus;
 
 import java.io.FileWriter;
 import java.io.IOException;

@@ -1,9 +1,9 @@
-package queue;
+package com.taskflow.queue;
 
-import model.Task;
-import model.TaskPriorityComparator;
-import model.TaskStatus;
-import exception.InvalidTaskException;
+import com.taskflow.model.Task;
+import com.taskflow.model.TaskPriorityComparator;
+import com.taskflow.model.TaskStatus;
+import com.taskflow.exception.InvalidTaskException;
 
 import java.util.concurrent.PriorityBlockingQueue;
 
