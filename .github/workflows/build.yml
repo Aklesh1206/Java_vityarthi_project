@@ -1,0 +1,39 @@
+name: Build and Validate
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      - name: Compile main sources
+        run: |
+          mkdir -p target/classes
+          find src/main/java -name "*.java" > sources.txt
+          javac -d target/classes @sources.txt
+
+      - name: Compile test sources
+        run: |
+          mkdir -p target/test-classes
+          find src/test/java -name "*.java" > test-sources.txt
+          javac -cp target/classes -d target/test-classes @test-sources.txt
+
+      - name: Run automated validation suite
+        run: java -cp target/classes:target/test-classes com.taskflow.TaskFlowValidationTest
+
+      - name: Run the application end-to-end
+        run: java -cp target/classes com.taskflow.Main config/tasks.txt 4
