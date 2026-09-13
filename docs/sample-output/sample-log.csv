@@ -1,0 +1,27 @@
+timestamp,taskId,taskName,thread,event
+2026-09-11T20:35:14.334593997Z,2,Send email,pool-1-thread-2,STARTED on pool-1-thread-2
+2026-09-11T20:35:14.365375594Z,10,Notify subscribers,pool-1-thread-4,STARTED on pool-1-thread-4
+2026-09-11T20:35:14.365539840Z,7,Refresh cache,pool-1-thread-3,STARTED on pool-1-thread-3
+2026-09-11T20:35:14.365628403Z,4,Cleanup temp files,pool-1-thread-1,STARTED on pool-1-thread-1
+2026-09-11T20:35:14.675573998Z,7,Refresh cache,pool-1-thread-3,FAILED (attempt 1): Simulated random failure for task 7
+2026-09-11T20:35:14.675963462Z,7,Refresh cache,pool-1-thread-3,RETRYING
+2026-09-11T20:35:14.766174230Z,2,Send email,pool-1-thread-2,COMPLETED
+2026-09-11T20:35:14.766626754Z,3,Backup database,pool-1-thread-2,STARTED on pool-1-thread-2
+2026-09-11T20:35:14.865788836Z,10,Notify subscribers,pool-1-thread-4,COMPLETED
+2026-09-11T20:35:14.866129013Z,5,Sync inventory,pool-1-thread-4,STARTED on pool-1-thread-4
+2026-09-11T20:35:14.965940062Z,4,Cleanup temp files,pool-1-thread-1,COMPLETED
+2026-09-11T20:35:14.966288694Z,8,Validate orders,pool-1-thread-1,STARTED on pool-1-thread-1
+2026-09-11T20:35:14.976458484Z,7,Refresh cache,pool-1-thread-3,COMPLETED on retry
+2026-09-11T20:35:14.977007227Z,1,Generate report,pool-1-thread-3,STARTED on pool-1-thread-3
+2026-09-11T20:35:15.766739907Z,5,Sync inventory,pool-1-thread-4,COMPLETED
+2026-09-11T20:35:15.767174557Z,6,Compress logs,pool-1-thread-4,STARTED on pool-1-thread-4
+2026-09-11T20:35:16.066808596Z,8,Validate orders,pool-1-thread-1,FAILED (attempt 1): Simulated random failure for task 8
+2026-09-11T20:35:16.067627650Z,8,Validate orders,pool-1-thread-1,RETRYING
+2026-09-11T20:35:16.177374498Z,1,Generate report,pool-1-thread-3,COMPLETED
+2026-09-11T20:35:16.178071900Z,9,Archive old records,pool-1-thread-3,STARTED on pool-1-thread-3
+2026-09-11T20:35:16.467484637Z,6,Compress logs,pool-1-thread-4,COMPLETED
+2026-09-11T20:35:16.567249367Z,3,Backup database,pool-1-thread-2,COMPLETED
+2026-09-11T20:35:17.168318334Z,8,Validate orders,pool-1-thread-1,COMPLETED on retry
+2026-09-11T20:35:17.341447474Z,9,Archive old records,pool-1-thread-3,FAILED (attempt 1): Interrupted while executing task 9
+2026-09-11T20:35:17.341664178Z,9,Archive old records,pool-1-thread-3,RETRYING
+2026-09-11T20:35:17.341815182Z,9,Archive old records,pool-1-thread-3,FAILED permanently: Interrupted while executing task 9
