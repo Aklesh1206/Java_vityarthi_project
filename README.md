@@ -12,38 +12,69 @@ TaskFlow is a Java-based task scheduling simulator built for the "Programming in
 - **Input validation & custom exception handling** — invalid task submissions (blank name, non-positive duration/priority) are rejected with `InvalidTaskException`; execution failures are handled with `TaskExecutionException`
 
 ## Technologies / Tools Used
-- Java 21 (core language, no external dependencies)
+- Java 17+ (core language, no external runtime dependencies)
+- Maven (standard project layout and build lifecycle)
 - `java.util.concurrent` — `ExecutorService`, `PriorityBlockingQueue`, `AtomicInteger`, `CopyOnWriteArrayList`
 - Plain file I/O (`FileWriter`, `PrintWriter`, `BufferedReader`) for logging and task input
-- Graphviz (for generating design diagrams — not a runtime dependency)
+- GitHub Actions (CI — compiles and runs the validation suite on every push)
+- Graphviz + Python/Pillow (used to generate the design diagrams — not a runtime dependency)
 
 ## Project Structure
 ```
-src/
- ├── model/            Task, TaskStatus (enum), TaskPriorityComparator
- ├── queue/            TaskQueueManager
- ├── executor/         TaskExecutorService, Worker
- ├── exception/        InvalidTaskException, TaskExecutionException
- ├── logger/           TaskLogger (interface), ConsoleTaskLogger, FileTaskLogger
- ├── report/           PerformanceReportGenerator
- ├── util/             ConfigLoader
- └── Main.java         Entry point
-diagrams/              Architecture, workflow, class, and sequence diagrams
-output/                Sample log and report from a test run
-tasks.txt              Sample input file (task definitions)
+TaskFlow/
+├── pom.xml                      Maven project descriptor
+├── .github/workflows/build.yml  CI: compiles + runs validation suite on every push
+├── config/
+│   └── tasks.txt                 Sample task input file
+├── src/
+│   ├── main/java/com/taskflow/
+│   │   ├── Main.java              Entry point
+│   │   ├── model/                 Task, TaskStatus (enum), TaskPriorityComparator
+│   │   ├── queue/                 TaskQueueManager
+│   │   ├── executor/               TaskExecutorService, Worker
+│   │   ├── exception/              InvalidTaskException, TaskExecutionException
+│   │   ├── logger/                 TaskLogger (interface), ConsoleTaskLogger, FileTaskLogger
+│   │   ├── report/                 PerformanceReportGenerator
+│   │   └── util/                   ConfigLoader
+│   └── test/java/com/taskflow/
+│       ├── TaskFlowValidationTest.java   Automated validation suite (20 assertions)
+│       └── manual/                       Module1Test, Module2Test, Module3Test — dev-time smoke tests
+├── docs/
+│   ├── TaskFlow_Project_Report.pdf      Full 15-section project report
+│   ├── diagrams/                         Architecture, workflow, class, sequence, use case diagrams
+│   └── sample-output/                    Sample log + report from a real run
+├── README.md
+└── statement.md
 ```
 
 ## Steps to Install & Run
-1. Ensure JDK 17+ is installed (`java -version`).
-2. From the `src/` directory, compile all source files:
+
+### Option A — Maven (recommended)
+1. Ensure JDK 17+ and Maven are installed (`java -version`, `mvn -version`).
+2. From the project root, compile:
    ```
-   javac model/*.java exception/*.java queue/*.java logger/*.java executor/*.java report/*.java util/*.java Main.java
+   mvn compile
    ```
-3. Run the app, pointing it at a task file (defaults to `tasks.txt` in the current directory, pool size 4):
+3. Run the app (uses `config/tasks.txt` and pool size 4 by default, configured in `pom.xml`):
    ```
-   java Main tasks.txt 4
+   mvn exec:java
    ```
-4. Output files `taskflow-log.csv` and `taskflow-report.txt` are generated in the same directory.
+   To use different arguments: `mvn exec:java -Dexec.args="config/tasks.txt 6"`
+4. Or build a runnable jar and run it directly:
+   ```
+   mvn package
+   java -jar target/taskflow.jar config/tasks.txt 4
+   ```
+
+### Option B — Plain javac (no Maven required)
+From the project root:
+```
+find src/main/java -name "*.java" > sources.txt
+javac -d target/classes @sources.txt
+java -cp target/classes com.taskflow.Main config/tasks.txt 4
+```
+
+Output files `taskflow-log.csv` and `taskflow-report.txt` are generated in the current working directory.
 
 ### Task file format
 Each line: `name,priority,estimatedDurationMillis` (priority: 1 = highest). Lines starting with `#` are comments.
@@ -53,19 +84,20 @@ Send email,1,400
 ```
 
 ## Instructions for Testing
-An automated validation suite (`ValidationTests.java`) runs 20 assertions across the core modules — priority ordering, FIFO tiebreaking, submission validation, task timing, and a full concurrent execution run — with no external test framework required:
-```
-javac model/*.java exception/*.java queue/*.java logger/*.java executor/*.java report/*.java util/*.java ValidationTests.java
-java ValidationTests
-```
-Exits with code 0 if all checks pass, 1 otherwise.
+An automated validation suite (`TaskFlowValidationTest.java`) runs 20 assertions across the core modules — priority ordering, FIFO tiebreaking, submission validation, task timing, and a full concurrent execution run. It's a plain, dependency-free runner (no JUnit) so it always compiles offline; see the note in `pom.xml` if you'd like to wire it up as a proper JUnit suite for `mvn test`.
 
-Three standalone test classes were also used during development to validate each module independently before wiring them together:
-- `Module1Test.java` — verifies the priority queue orders tasks correctly and rejects invalid submissions
-- `Module2Test.java` — verifies concurrent execution across multiple worker threads, with retry-on-failure behavior
-- `Module3Test.java` — verifies the full pipeline end-to-end, including file logging and report generation
+Run it with plain javac/java:
+```
+find src/test/java -name "*.java" > test-sources.txt
+javac -cp target/classes -d target/test-classes @test-sources.txt
+java -cp target/classes:target/test-classes com.taskflow.TaskFlowValidationTest
+```
+Exits with code 0 if all checks pass, 1 otherwise — this exact sequence runs automatically in CI on every push (see `.github/workflows/build.yml`).
 
-Compile and run any of these the same way as `Main.java` (e.g. `java Module1Test`) to see each module's output in isolation.
+Three standalone test classes under `src/test/java/com/taskflow/manual/` were also used during development to validate each module independently before wiring them together:
+- `Module1Test` — verifies the priority queue orders tasks correctly and rejects invalid submissions
+- `Module2Test` — verifies concurrent execution across multiple worker threads, with retry-on-failure behavior
+- `Module3Test` — verifies the full pipeline end-to-end, including file logging and report generation
 
 ## Screenshots
-See `output/sample-log.csv` and `output/sample-report.txt` for example output from a real run, and `diagrams/` for the architecture, workflow, class, and sequence diagrams.
+See `docs/sample-output/` for example output from a real run, and `docs/diagrams/` for the architecture, workflow, class, sequence, and use case diagrams. The full write-up is in `docs/TaskFlow_Project_Report.pdf`.

@@ -1,4 +1,21 @@
+# Compiled output
 *.class
+target/
+bin/
+out/
+
+# Runtime-generated files
 taskflow-log.csv
 taskflow-report.txt
+
+# IDE
+.vscode/
+.idea/
+*.iml
+.settings/
+.classpath
+.project
+
+# OS
 .DS_Store
+Thumbs.db
