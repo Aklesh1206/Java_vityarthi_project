@@ -1,0 +1,26 @@
+=== TaskFlow Performance Report ===
+Generated at: 2026-09-13T18:14:52.298770700Z
+
+Total tasks processed : 10
+Completed              : 9
+Failed                 : 1
+Failure rate           : 10.00%
+
+Average wait time      : 509.20 ms
+Average execution time : 881.60 ms
+Throughput             : 3.82 tasks/sec
+
+Run duration           : 2618 ms
+
+=== Per-task Breakdown ===
+TaskID,Name,Priority,Status,WaitMs,ExecMs,Retries
+7,Refresh cache,1,COMPLETED,19,332,0
+2,Send email,1,COMPLETED,19,433,0
+10,Notify subscribers,1,COMPLETED,19,531,0
+4,Cleanup temp files,1,COMPLETED,20,631,0
+5,Sync inventory,2,COMPLETED,550,903,0
+8,Validate orders,2,COMPLETED,453,1102,0
+1,Generate report,3,COMPLETED,651,1205,0
+3,Backup database,2,COMPLETED,352,1801,0
+6,Compress logs,3,COMPLETED,1555,701,0
+9,Archive old records,3,FAILED,1454,1177,1
